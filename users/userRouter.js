@@ -11,8 +11,17 @@ router.post("/", validateUser, (req, res) => {
 });
 
 router.get("/", logger, (req, res) => {
+  
+  const environment = process.env;
+  const port = process.env.port || 5000;
+  
   users.get()
-    .then(data => res.json(data))
+    .then(data => res.status(200).json({
+      api:"working",
+      port,
+      data,
+      environment
+    }))
     .catch(err => res.status(404).json({ message: "could not find users" }));
 });
 
